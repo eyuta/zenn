@@ -1,0 +1,11 @@
+{
+  "name": "zenn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/eyuta/zenn.git",
+  "author": "whi_sato_yut <sato_yut@works-hi.co.jp>",
+  "license": "MIT",
+  "dependencies": {
+    "zenn-cli": "^0.1.63"
+  }
+}
