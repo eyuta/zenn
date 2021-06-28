@@ -168,7 +168,7 @@ Google では、四半期に 30 分のダウンタイムをエラーバジェッ
 
 こと。
 
-![01](./../out/articles/database-reliability-engineering__03_01.png)
+![01](https://github.com/eyuta/zenn/blob/master/out/articles/database-reliability-engineering__03_01.png?raw=true)
 
 ```plantuml
 @startuml
@@ -357,7 +357,7 @@ TODO: ポストモーテム
 - アーキテクチャのパイプライン
   - 設計段階で想定していなかったリスクを組み込む
 
-![02](./../out/articles/database-reliability-engineering__03_02.png)
+![02](https://github.com/eyuta/zenn/blob/master/out/articles/database-reliability-engineering__03_02.png?raw=true)
 
 ```plantuml
 @startuml
