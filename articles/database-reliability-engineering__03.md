@@ -168,6 +168,8 @@ Google では、四半期に 30 分のダウンタイムをエラーバジェッ
 
 こと。
 
+![01](./../out/articles/database-reliability-engineering__03_01.png)
+
 ```plantuml
 @startuml
 hide empty description
@@ -354,6 +356,8 @@ TODO: ポストモーテム
   - 今まで見落としていた脆弱性を明らかにし、リストを更新する
 - アーキテクチャのパイプライン
   - 設計段階で想定していなかったリスクを組み込む
+
+![02](./../out/articles/database-reliability-engineering__03_02.png)
 
 ```plantuml
 @startuml
