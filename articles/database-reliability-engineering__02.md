@@ -7,6 +7,7 @@ published: true
 ---
 
 [O'Reilly Japan - データベースリライアビリティエンジニアリング](https://www.oreilly.co.jp/books/9784873119403/) の 2 章の読書メモです。
+SlideServe は[こちら](https://www.slideserve.com/yuta/database-reliability-engineering-02-slide)。
 
 ## 2. サービスレベルマネジメント
 
