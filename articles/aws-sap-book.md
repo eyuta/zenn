@@ -1,6 +1,6 @@
 ---
 title: "AWS 認定ソリューションアーキテクト－プロフェッショナル～試験特性から導き出した演習問題と詳細解説～ 読書メモ"
-emoji: "🌊"
+emoji: "💻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws", "sap", "certification"]
 published: true
