@@ -90,6 +90,8 @@ published: true
 
 ### 2.02. コンピュート
 
+ユーザーが開発したアプリケーションを、動的なスケーラビリティ、高可用性、フォールトトレランスを兼ね備えたシステムとして実行するために提供されるコンピューティングサービス。
+
 - [EC2 (Amazon Elastic Computed Cloud)](https://www.slideshare.net/AmazonWebServicesJapan/20190305-aws-black-belt-online-seminar-amazon-ec2)
   - IaaS
   - 仮想サーバー
@@ -110,6 +112,7 @@ published: true
   - 大規模計算におけるバッチ処理を行う (夜間バッチのような用途ではない)
   - シミュレーションなど、負荷の高い計算をスーパーコンピューターやクラスタで順次実行する
 - [ECS (Amazon Elastic Container Service)](https://www.slideshare.net/AmazonWebServicesJapan/20190731-black-belt-online-seminar-amazon-ecs-deep-dive-162160987)
+  - CaaS
   - コンテナ型のアプリケーション実行基盤
   - コンテナの起動、停止、アクセス制御等を一元的に管理するコンテナオーケストレーションサービス
   - EC2 と Fargate を使用可能
@@ -121,6 +124,45 @@ published: true
   - ただし、ssh 等によるログインができない
 
 ### 2.03. ネットワーキング
+
+ユースケースに応じて、インターネットや通信キャリアが提供する閉域網(専用線)、そして対応する AWS のネットワーキング関連サービスを正しく選択する必要がある。
+
+- [VPC (Amazon Virtual Private Cloud)](https://www.slideshare.net/AmazonWebServicesJapan/20201021-aws-black-belt-online-seminar-amazon-vpc)
+  - AWS 上にユーザーが構築可能な仮想ネットワークと、関連機能の総称
+  - AWS は、VPC の利用を前提に設計・構築を行うことが多い
+- NAT Gateway
+  - VPC の一機能
+  - インターネットへの通信経路を持たない EC2 インスタンスであっても、NAT Gateway を経由するとネットワークへアクセス可能
+- VPC Endpoint
+  - VPC の一機能
+  - 各サービスに VPC Endpoint を作成することで、インターネットを経由せずに当該サービスに接続可能
+  - VPC Endpoint には 2 種類ある
+    - ゲートウェイエンドポイント: S3, DynamoDB のみ対応
+    - インターフェースエンドポイント: 後述
+- PrivateLink
+  - VPC の一機能
+  - VPC Endpoint のうち、インターフェスエンドポイントを PrivateLink と呼ぶ
+  - PrivateLink を作成すると、VPC 内に専用の ENI が作成され、プライベート IP アドレスが割り当てられる
+  - これにより、PrivateLink を経由して(インターネットを経由せずに)当該サービスへアクセス可能
+- VPC Peering
+  - VPC の一機能
+  - VPC Peering を使うと、VPC 間のルーティングが行われ、通信が可能になる
+  - 異なる AWS アカウント、リージョン間でも通信可能
+- [Route 53 (Amazon Route 53)](https://www.slideshare.net/AmazonWebServicesJapan/20191016-aws-black-belt-online-seminar-amazon-route-53-resolver)
+  - マネージド型の DNS サービス
+  - インターネットや VPC 内の名前解決が可能
+  - ルーティングポリシーに基づくトラフィックのルーティング、フェイルオーバーも可能
+- [Direct Connect (AWS Direct Connect)](https://www.slideshare.net/AmazonWebServicesJapan/20210209-aws-black-belt-online-seminar-aws-direct-connect)
+  - 通信キャリアの閉域網を経由して、オンプレミス環境と VPC 間で通信を行う
+  - インターネット経由の VPN 接続より、安定しており、かつセキュリティも担保されている
+  - 高い可用性を求める場合は複数のキャリアの回線を利用する
+  - ただし、Direct Connect は VPN 接続よりも高価なため、バックアップには VPN 接続を用いるケースもある
+- [AWS Managed VPN](https://www.slideshare.net/AmazonWebServicesJapan/amazon-vpc-vpn)
+  - 前述したように、VPC とオンプレミス間で比較的安価に暗号化接続を行う手段の 1 つ
+  - VPC とオンプレミスを接続するには、以下が必要になる
+    - オンプレミス側: VPN 接続が可能なネットワーク機器
+    - VPC 側: 上記のネットワーク機器に対応した Customer Gateway (CGW)
+    - VPC 側: AWS 側の VPN 側の機能を有効化するための Virtual Private Gateway (VGW)
 
 ### 2.04. ストレージ、配信
 
