@@ -166,7 +166,94 @@ published: true
 
 ### 2.04. ストレージ、配信
 
+AWS が提供する様々なストレージサービスから、データの利用用途やライフサイクルに応じて、適切なサービスを組み合わせる必要がある。
+
+- [S3 (Amazon Simple Storage Service)](https://www.slideshare.net/AmazonWebServicesJapan/20190220-aws-black-belt-online-seminar-amazon-s3-glacier)
+  - 高可用性・高耐久性のストレージサービス
+  - AWS の各サービスのバックアップにも、スナップショットといった形で保存されることがある
+  - 以下のようなユースケースに応じた使い方を理解する
+    - データのアクセス頻度や耐久性等に応じたストレージクラスの使い分け
+    - アクセス制御方法
+    - S3 を利用した Web サイトホスティング
+    - 暗号化、バージョン管理、ライフサイクル管理、etc
+- [EBS (Amazon Elastic Block Storage)](https://www.slideshare.net/AmazonWebServicesJapan/20190320-aws-black-belt-online-seminar-amazon-ebs/)
+  - E2 と共に扱う、ブロックストレージ
+  - EBS ボリュームは EC2 の OS によってマウントされる
+  - ボリュームがアタッチされる EC2 に求められる IOPS 性能やスループット性能に応じて、最適なボリュームタイムを選択する
+  - EC2 と EBS はネットワークで接続されている。
+  - そのため、帯域が十分に確保されていない場合、想定されたパフォーマンスを発揮できない
+  - 以下で対応可能
+    - EC2 のスペックをあげる
+    - EC2 のインスタンスタイプを**EBS 最適化**にする
+- [EFS (Amazon Elastic File System)](https://www.slideshare.net/AmazonWebServicesJapan/2018070420190520-renewed-aws-black-belt-online-seminar-amazon-elastic-file-system-amazon-efs)
+  - NFS (Network File System) ファイルシステムサービス
+  - 複数の EF2 インスタンスから同じ EBS をマウント可能
+  - 以下をサポートしていない点には注意が必要
+    - Windows で使用される SMB (Server Message Block)
+    - Windows を OS として利用する EV2 インスタンス
+- Glacier (Amazon S3 Glacier)
+  - S3 のストレージクラスの一種
+  - 安価に長期保存が可能
+  - 最小ストレージ保存期間は 90 日
+  - ただし、安価な代わりにアーカイブしたデータの取り出しに数時間かかる
+  - (迅速取り出し(Expedited)を利用すると、コストは掛かるものの、数分で取り出せる)
+- Glacier Deep Archive
+  - Glacier より一層コスト削減が可能
+  - ただし、
+    - 最小ストレージ保存期間は 180 日
+    - データの取り出しには 12 時間かかる
+- [Storage Gateway](https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2017-aws-storage-gateway)
+  - 主にオンプレミス環境のデータを仮想アプライアンス経由で S3 にバックアップするためのサービス
+  - オンプレミス環境のサーバー群は残しつつ、データのストレージへのバックアップ部分のみを AWS 側にオフロードする
+  - 以下の 3 つのタイプがある
+    - ファイルゲートウェイ
+      - S3 オブジェクトをバックエンドとしたファイルストレージ
+    - ボリュームゲートウェイ
+      - S3 及び EBS snapshots をバックエンドとしたブロックストレージ
+    - テープゲートウェイ
+      - S3 と Glacier にデータを保管する仮想テープストレージと VTL 管理
+- CloudFront
+  - CDN (Content Delivery Network)サービス
+  - ユーザーが Web を通じて配信したいコンテンツをを CloudFront の中にキャッシュとして保持する
+  - 世界中にエッジロケーションが存在するため、ユーザーに対する応答時間を短くできる
+  - 静的コンテンツをエッジロケーションから返送することで、オリジン側の負荷を低減できる
+
 ### 2.05. データベース
+
+- [RDS (Amazon Relational Database Service)](https://www.slideshare.net/AmazonWebServicesJapan/20180425-aws-black-belt-online-seminar-amazon-relational-database-service-amazon-rds-96509889)
+  - MySQL, PostgreSQL, Oracle, SQL Server 等をマネージドで提供するサービス
+  - コンソールや CLI で簡単に冗長構成(Multi-AZ)の環境を構築できる
+  - 以下の機能により、最短で 5 分前の状態に DB を復元するポイントインタイムの復元機能 (Point-in-Time Recovery)を提供する
+    - デフォルトで日次のバックアップを取得する
+    - 定期的にデータ断面のスナップショットを S3 に保存する
+- [Aurora (Amazon Aurora)](https://www.slideshare.net/AmazonWebServicesJapan/20200929-aws-black-belt-online-seminar-amazon-aurora-mysql-compatible-edition)
+  - RDB の一種
+  - [MySQL](https://www.slideshare.net/AmazonWebServicesJapan/20190424-aws-black-belt-online-seminar-amazon-aurora-mysql)と[PostgreSQL](https://www.slideshare.net/AmazonWebServicesJapan/20190828-aws-black-belt-online-seminar-amazon-aurora-with-postgresql-compatibility-168930538)をクラウド環境に最適化させたサービス
+  - [AWS によると、標準的な MySQL と比べて 5 倍、PostgreSQL と比べて 3 倍高速になる](https://aws.amazon.com/jp/rds/aurora/?aurora-whats-new.sort-by=item.additionalFields.postDateTime&aurora-whats-new.sort-order=desc)
+  - プライマリインスタンスに障害が発生した場合、リードレプリカがプライマリに昇格する
+- [DynamoDB (Amazon DynamoDB)](https://www.slideshare.net/AmazonWebServicesJapan/20170809-black-belt-dynamodb)
+  - キーとバリューの組み合わせでデータが保存される、キーバリュー型の NoSQL データベースサービス
+  - 保存されたデータは 3 つの AZ に複製されるため、高いスケーラビリティを確保できる
+  - DynamoDB のスループットはテーブル単位で指定された RCU(Read Capacity Unit), WCU(Write Capacity Unit)によって定まる
+  - RCU, WCU は、以下を考慮して計算する
+    - テーブルに保存されるデータのサイズ
+    - 強い一貫性が必要かどうか
+    - 1 秒あたりに発生するべき Read や Write の数
+- [ElastiCache (Amazon ElastiCache)](https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2017-amazon-elasticache-84060910)
+  - マネージド型のインメモリデータストア
+  - データストアのエンジンとして Redis, Memcached を選択可能
+  - データがメモリの中に格納されているため、高速に返却できる
+  - RDS への問い合わせが頻繁に発生するデータについて ElastiCache にキャッシュすることで、レスポンスタイムを短縮可能
+  - また、セッション情報を保存するユースケースもある
+    - セッション情報を ElastiCache に保存することで、アプリケーションをストートレスに保てる
+- [Neptune (Amazon Neptune)](https://www.slideshare.net/AmazonWebServicesJapan/20200714-aws-black-belt-online-seminar-amazon-neptune)
+  - グラフモデルを効率的に格納し、検索するためのグラフデータベースサービス
+  - プロパティグラフと RDF をサポート
+  - SNS, 路線図、WWW 等、いたるところで活用される
+- [Redshift (Amazon Redshift)](https://www.slideshare.net/AmazonWebServicesJapan/20200318-aws-black-belt-online-seminar-amazon-redshift)
+  - PostgreSQL に基づいた、データ分析に特化したデータウェアハウスサービス
+  - データは列指向(カラムナ)型で格納されるため、特定の列に保存されたデータの集計を高速に行える
+  - 数十程度のクライアントが業務分析を行うようなワークロードに最適化されている
 
 ### 2.06. アナリティクス
 
