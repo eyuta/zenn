@@ -8,7 +8,7 @@ published: true
 
 ## Rust Dojo #01
 
-## はじめに
+### はじめに
 
 社内で Rust Dojo を行ったので、内容をメモしていく。
 教材は[Rust By Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja/index.html)を中心に進めていく。
@@ -16,12 +16,12 @@ published: true
 `#01` の内容は以下の通り
 
 - [Rust Dojo #01](#rust-dojo-01)
-- [はじめに](#はじめに)
+  - [はじめに](#はじめに)
   - [インストール](#インストール)
   - [Hello World](#hello-world)
     - [演習](#演習)
   - [コメント](#コメント)
-    - [通常のコメント(Non-doc comments): コンパイラに無視される](#通常のコメントnon-doc-comments-コンパイラに無視される)
+    - [通常のコメント (Non-doc comments)](#通常のコメント-non-doc-comments)
     - [ドキュメンテーションコメント (Doc comments)](#ドキュメンテーションコメント-doc-comments)
 
 ### インストール
@@ -140,7 +140,7 @@ rustc hello.rs && ./hello
 
 コメントには以下の 2 種類がある
 
-#### 通常のコメント(Non-doc comments): コンパイラに無視される
+#### 通常のコメント (Non-doc comments)
 
 C++スタイルのコメント。
 コンパイル時に空白として解釈される。
