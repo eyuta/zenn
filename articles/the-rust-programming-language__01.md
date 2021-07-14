@@ -247,8 +247,8 @@ rustdoc documents.rs
 
 `/doc/documents/index.html`をブラウザで開くと、以下のように表示されるのが確認できる。
 
-![/doc/documents/index.html](https://github.com/eyuta/zenn/blob/master/out/articles/the-rust-programming-language__01_01.png?raw=true)
+![the-rust-programming-language__01_01.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/110860/c52ceb0b-7608-9aa2-4f2c-68bb56009dce.png)
 
 `outer_module`をクリックすると、モジュール(`mod`)の中身を表示できる。
 
-![/doc/documents/outer_module/index.html](https://github.com/eyuta/zenn/blob/master/out/articles/the-rust-programming-language__01_02.png?raw=true)
+![the-rust-programming-language__01_02.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/110860/f140bf73-1eaf-172b-e161-b1d09ed37b31.png)
